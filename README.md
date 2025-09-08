@@ -8,7 +8,7 @@ Ushbu paket Yii2 loyihasida RabbitMQ queue workerlarini yaratish va boshqarish u
 
 ## Talablar
 
-- PHP >= 7.4 yoki ^8.0  
+- PHP >= ^8.0  
 - Yii2 >= 2.0.13  
 - `php-amqplib/php-amqplib` ^3.7  
 
