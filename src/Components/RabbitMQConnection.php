@@ -3,19 +3,18 @@
 namespace RabbitMQQueue\Components;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use yii\base\Component;
 use Exception;
 
-final class RabbitMQConnection
+final class RabbitMQConnection extends Component
 {
-    private static ?self $instance = null;
+    public string $host;
+    public int $port = 5672;
+    public string $user;
+    public string $password;
+    public string $vhost = '/';
+
     private ?AMQPStreamConnection $connection = null;
-
-    private function __construct() {}
-
-    public static function getInstance(): self
-    {
-        return self::$instance ??= new self();
-    }
 
     /**
      * @throws Exception
@@ -24,11 +23,11 @@ final class RabbitMQConnection
     {
         if ($this->connection === null || !$this->connection->isConnected()) {
             $this->connection = new AMQPStreamConnection(
-                getenv('RABBITMQ_HOST'),
-                (int)getenv('RABBITMQ_PORT'),
-                getenv('RABBITMQ_USER'),
-                getenv('RABBITMQ_PASS'),
-                getenv('RABBITMQ_VHOST') ?: '/'
+                $this->host,
+                $this->port,
+                $this->user,
+                $this->password,
+                $this->vhost
             );
         }
 
