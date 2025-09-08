@@ -1,5 +1,5 @@
 {
-  "name": "vendor/yii2-rabbitmq-queue",
+  "name": "muxtorov98/yii2-rabbitmq-queue",
   "description": "RabbitMQ Queue Worker for Yii2 Advanced (universal package)",
   "type": "library",
   "license": "MIT",
