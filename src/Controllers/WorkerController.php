@@ -20,7 +20,16 @@ class WorkerController extends Controller
 
     public function actionStart(): void
     {
-        $connection = RabbitMQConnection::getInstance()->getConnection();
+        /** @var RabbitMQConnection $rabbitmq */
+        $rabbitmq = \Yii::$app->rabbitmq;
+
+        try {
+            $connection = $rabbitmq->getConnection();
+        } catch (Throwable $e) {
+            $this->stderr("❌ RabbitMQ connection failed: " . $e->getMessage() . "\n");
+            return;
+        }
+
         $channel = $connection->channel();
 
         foreach ($this->handlers as $queue => $handler) {
@@ -40,7 +49,7 @@ class WorkerController extends Controller
         }
 
         $channel->close();
-        RabbitMQConnection::getInstance()->close();
+        $rabbitmq->close();
     }
 
     private function consumeMessage(string $queue, AMQPMessage $msg): void
