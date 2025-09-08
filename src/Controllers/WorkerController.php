@@ -20,16 +20,10 @@ class WorkerController extends Controller
 
     public function actionStart(): void
     {
-        /** @var RabbitMQConnection $rabbitmq */
+        /** @var \RabbitMQQueue\Components\RabbitMQConnection $rabbitmq */
         $rabbitmq = \Yii::$app->rabbitmq;
 
-        try {
-            $connection = $rabbitmq->getConnection();
-        } catch (Throwable $e) {
-            $this->stderr("❌ RabbitMQ connection failed: " . $e->getMessage() . "\n");
-            return;
-        }
-
+        $connection = $rabbitmq->getConnection();
         $channel = $connection->channel();
 
         foreach ($this->handlers as $queue => $handler) {
@@ -38,7 +32,7 @@ class WorkerController extends Controller
 
             $channel->basic_consume(
                 queue: $queue,
-                callback: fn(AMQPMessage $msg) => $this->consumeMessage($queue, $msg)
+                callback: fn(\PhpAmqpLib\Message\AMQPMessage $msg) => $this->consumeMessage($queue, $msg)
             );
 
             $this->stdout("👷 Listening on {$queue}\n");
@@ -51,6 +45,7 @@ class WorkerController extends Controller
         $channel->close();
         $rabbitmq->close();
     }
+
 
     private function consumeMessage(string $queue, AMQPMessage $msg): void
     {
