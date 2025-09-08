@@ -58,7 +58,7 @@ return [
 
 # Misol:
 
-```bash
+```php
 <?php
 
 namespace console\handlers;
