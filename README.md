@@ -24,6 +24,16 @@ composer require muxtorov98/yii2-rabbitmq-queue
 
 ## Konfiguratsiya
 
+- .env
+
+```env
+RABBITMQ_HOST=localhost
+RABBITMQ_PORT=5672
+RABBITMQ_USER=admin
+RABBITMQ_PASS=admin
+RABBITMQ_VHOST=/
+```
+
 - console/config/main.php faylini sozlang:
 
 ```php
@@ -32,6 +42,18 @@ use RabbitMQQueue\Registry\HandlerRegistry;
 use RabbitMQQueue\Handlers\QueueHandlerInterface;
 
 return [
+
+    'components' => [
+        'rabbitmq' => [
+            'class' => RabbitMQQueue\Components\RabbitMQConnection::class,
+            'host' => env('RABBITMQ_HOST'),
+            'port' => env('RABBITMQ_PORT'),
+            'user' => env('RABBITMQ_USER'),
+            'password' => env('RABBITMQ_PASSWORD'),
+            'vhost' => '/',
+        ],
+    ],
+ 
     'controllerMap' => [
         'worker' => WorkerController::class,
     ],
