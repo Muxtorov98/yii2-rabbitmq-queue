@@ -8,7 +8,7 @@ Ushbu paket Yii2 loyihasida RabbitMQ queue workerlarini yaratish va boshqarish u
 
 ## Talablar
 
-- PHP >= ^8.0  
+- PHP >= ^8.1  
 - Yii2 >= 2.0.13  
 - `php-amqplib/php-amqplib` ^3.7  
 
@@ -19,7 +19,8 @@ Ushbu paket Yii2 loyihasida RabbitMQ queue workerlarini yaratish va boshqarish u
 Composer orqali:
 
 ```bash
-composer require muxtorov98/yii2-rabbitmq-queue
+composer require php-amqplib/php-amqplib:^3.7
+composer require muxtorov98/yii2-rabbitmq-queue:v1.1.0
 ```
 
 ## Konfiguratsiya
@@ -33,8 +34,23 @@ RABBITMQ_USER=admin
 RABBITMQ_PASS=admin
 RABBITMQ_VHOST=/
 ```
+- common/config/main.php fayilini sozlang: `Publisher (xabar yuborish)`
 
-- console/config/main.php faylini sozlang:
+```php
+return [
+
+    'components' => [
+        'rabbitPublisher' => [
+            'class' => RabbitMQQueue\Components\RabbitPublisher::class,
+            'host' => env('RABBITMQ_HOST'),
+            'port' => env('RABBITMQ_PORT'),
+            'user' => env('RABBITMQ_USER'),
+            'password' => env('RABBITMQ_PASSWORD'),
+            'vhost' => '/',
+        ],
+    ],
+```
+- console/config/main.php faylini sozlang: `Consumer / Worker (xabarlarni qabul qilish)`
 
 ```php
 use RabbitMQQueue\Controllers\WorkerController;
@@ -80,7 +96,16 @@ return [
 
 # Misol:
 
+- Xabar yuborish (Publisher)
+
 ```php
+Yii::$app->rabbitPublisher->publish('default_queue', ['message' => 'Hello queue']);
+```
+
+- Consumer / Worker (xabarlarni qabul qilish)
+  
+```php
+
 <?php
 
 namespace console\handlers;
@@ -114,4 +139,5 @@ class DefaultHandler implements QueueHandlerInterface
 php yii worker/start
 
 👷 Listening on default_queue
+📨 Received: {"message":"Hello queue"}
 ```
