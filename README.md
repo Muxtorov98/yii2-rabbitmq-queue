@@ -1,6 +1,6 @@
 # Yii2 RabbitMQ Queue Worker
 
-**RabbitMQ Queue Worker for Yii2 Advanced** (universal package)  
+**RabbitMQ Queue Worker for Yii2 Advanced microservices** (universal package)  
 
 Ushbu paket Yii2 loyihasida RabbitMQ queue workerlarini yaratish va boshqarish uchun mo‘ljallangan.
 
