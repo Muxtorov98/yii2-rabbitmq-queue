@@ -30,7 +30,7 @@ composer require muxtorov98/yii2-rabbitmq-queue:v1.1.0
 RABBITMQ_HOST=localhost
 RABBITMQ_PORT=5672
 RABBITMQ_USER=admin
-RABBITMQ_PASS=admin
+RABBITMQ_PASSWORD=admin
 RABBITMQ_VHOST=/
 ```
 - common/config/main.php fayilini sozlang: `Publisher (xabar yuborish)`
