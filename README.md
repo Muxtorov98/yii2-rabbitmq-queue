@@ -15,6 +15,10 @@ Ushbu paket Yii2 loyihasida RabbitMQ queue workerlarini yaratish va boshqarish u
 
 ## O‘rnatish
 
+- RabbitMQ ni ishga tushurish uchun quyidagi URL dan foydalaning:
+
+[https://github.com/Muxtorov98/docker-compose.rabbitmq.prod.yml/tree/main](https://github.com/Muxtorov98/docker-compose.rabbitmq.prod.yml/tree/main)
+
 Composer orqali:
 
 ```bash
