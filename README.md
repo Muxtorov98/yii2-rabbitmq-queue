@@ -18,7 +18,6 @@ Ushbu paket Yii2 loyihasida RabbitMQ queue workerlarini yaratish va boshqarish u
 Composer orqali:
 
 ```bash
-composer require php-amqplib/php-amqplib:^3.7
 composer require muxtorov98/yii2-rabbitmq-queue:v1.1.0
 ```
 
